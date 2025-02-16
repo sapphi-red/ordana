@@ -60,7 +60,7 @@ importers:
   packages/gen-docs:
     dependencies:
       ordana:
-        specifier: workspace:^0.2.0
+        specifier: workspace:^0.3.0
         version: link:../ordana
     devDependencies:
       '@types/node':

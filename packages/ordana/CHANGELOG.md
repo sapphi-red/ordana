@@ -1,5 +1,11 @@
 # ordana
 
+## 0.3.0
+
+### Minor Changes
+
+- [#5](https://github.com/sapphi-red/ordana/pull/5) [`6ed9c9a`](https://github.com/sapphi-red/ordana/commit/6ed9c9ad7360a35163344eca8d16bc17a4968637) Thanks [@sapphi-red](https://github.com/sapphi-red)! - Add allowKebabCaseAsCamelCaseArguments option to allow kebab-case arguments to be mapped to camelCase arguments.
+
 ## 0.2.0
 
 ### Minor Changes
