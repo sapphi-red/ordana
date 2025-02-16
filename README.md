@@ -89,7 +89,7 @@ if (result2.type === 'help') {
 ### document generation
 
 ```ts
-import { generateDocs } from '@ordana/gen-docs' // `@ordana/gen-docs` needs to be installed separately
+import { generateDocs } from 'ordana-gen-docs' // `ordana-gen-docs` needs to be installed separately
 const docs = generateDocs(options)
 console.log(docs)
 ```
