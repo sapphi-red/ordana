@@ -1,0 +1,10 @@
+foo2 baz - the subcommand baz
+
+Usage
+  $ foo2 baz
+
+Options
+  --globalArg1  [boolean]  the global argument globalArg1
+
+Aliases
+  foo2, foo2 qux

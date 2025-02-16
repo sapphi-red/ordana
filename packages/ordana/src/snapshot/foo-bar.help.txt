@@ -1,0 +1,9 @@
+foo bar - the subcommand bar
+
+Usage
+  $ foo bar <path>
+
+Options
+  --globalArg1   [boolean]  the global argument globalArg1
+  --arg1 <arg1>  [string]   the argument arg1
+  --arg2         [number]   the argument arg2

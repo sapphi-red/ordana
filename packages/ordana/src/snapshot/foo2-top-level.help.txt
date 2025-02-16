@@ -1,0 +1,10 @@
+Usage
+  $ foo2 [subcommand]
+
+Commands
+  bar <path>  the subcommand bar
+  baz         (default) the subcommand baz
+
+For more info, run any command with the --help flag:
+  $ foo2 bar --help
+  $ foo2 baz --help

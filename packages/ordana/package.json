@@ -1,0 +1,31 @@
+{
+  "name": "ordana",
+  "version": "0.1.0",
+  "type": "module",
+  "exports": "./dist/index.js",
+  "scripts": {
+    "build": "pnpm build:js && pnpm build:dts",
+    "build:js": "rolldown -c rolldown.config.ts",
+    "build:dts": "NODE_OPTIONS='--import tsx' rollup -c rollup.config-d.ts",
+    "test": "vitest --typecheck"
+  },
+  "author": "sapphi-red (https://github.com/sapphi-red)",
+  "license": "MIT",
+  "description": "A declarative CLI argument parser with automatic help message.",
+  "dependencies": {
+    "picocolors": "^1.1.1"
+  },
+  "devDependencies": {
+    "@pkgjs/parseargs": "0.9.1",
+    "@types/node": "catalog:",
+    "rolldown": "catalog:",
+    "rollup": "catalog:",
+    "rollup-plugin-dts": "catalog:",
+    "tsx": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "files": [
+    "dist"
+  ]
+}

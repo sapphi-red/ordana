@@ -1,0 +1,30 @@
+{
+  "name": "@ordana/gen-docs",
+  "version": "0.1.0",
+  "type": "module",
+  "exports": "./dist/index.js",
+  "scripts": {
+    "build": "pnpm build:js && pnpm build:dts",
+    "build:js": "rolldown -c rolldown.config.ts",
+    "build:dts": "NODE_OPTIONS='--import tsx' rollup -c rollup.config-d.ts",
+    "test": "vitest"
+  },
+  "author": "sapphi-red (https://github.com/sapphi-red)",
+  "license": "MIT",
+  "description": "Document generation for ordana.",
+  "peerDependencies": {
+    "ordana": "workspace:^0.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "rolldown": "catalog:",
+    "rollup": "catalog:",
+    "rollup-plugin-dts": "catalog:",
+    "tsx": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "files": [
+    "dist"
+  ]
+}
