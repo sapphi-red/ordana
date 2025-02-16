@@ -1,9 +1,5 @@
-import type {
-  DocsTopLevelOptions,
-  DocsSubCommandOptions,
-  SubCommandOptions,
-  TopLevelOptions
-} from 'ordana'
+import type { SubCommandOptions, TopLevelOptions } from 'ordana'
+import type { DocsTopLevelOptions, DocsSubCommandOptions } from './types.ts'
 import {
   getAliasList,
   getCommand,
