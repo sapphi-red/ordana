@@ -22,6 +22,7 @@ npm i ordana
 ## Usage
 
 ### parse
+
 ```ts
 import { parse } from 'ordana'
 import type { TopLevelOptions } from 'ordana'
@@ -41,7 +42,7 @@ const options = {
           }
         }
       },
-      positionals: {},
+      positionals: {}
     }
   }
 } satisfies TopLevelOptions
@@ -64,6 +65,7 @@ console.log(result)
 ```
 
 ### help message
+
 ```ts
 const input2 = ['dev', '--help']
 const result2 = parse(input2, options) // options is the same as above
@@ -85,11 +87,12 @@ if (result2.type === 'help') {
 ```
 
 ### document generation
-````ts
+
+```ts
 import { generateDocs } from '@ordana/gen-docs' // `@ordana/gen-docs` needs to be installed separately
 const docs = generateDocs(options)
 console.log(docs)
-````
+```
 
 <details>
 <summary>Output</summary>

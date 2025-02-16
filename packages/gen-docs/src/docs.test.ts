@@ -77,18 +77,3 @@ describe('generateDocs', () => {
     )
   })
 })
-
-const options = {
-  subcommands: {
-    dev: {
-      description: 'my subcommand',
-      arguments: {
-        foo: { type: 'string|boolean' },
-        bar: { type: 'string', multiple: true },
-      },
-      positionals: {},
-    },
-  },
-} satisfies TopLevelOptions
-const docs = generateDocs(options)
-console.log(docs)
