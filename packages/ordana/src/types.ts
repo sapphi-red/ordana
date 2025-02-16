@@ -83,6 +83,12 @@ export type TopLevelOptions = {
    * If a subcommand has the same argument name, the options in the subcommand argument are used.
    */
   globalArguments?: ArgumentOptionsRecord
+  /**
+   * Whether to allow kebab-case arguments to be mapped to camelCase arguments
+   *
+   * For example, `--foo-bar` will be allowed to be mapped to `--fooBar` when enabled.
+   */
+  allowKebabCaseAsCamelCaseArguments?: boolean
 }
 
 // we put the `extends false` condition first here because `undefined` compares like `any` when `strictNullChecks: false`

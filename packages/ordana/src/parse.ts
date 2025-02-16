@@ -53,14 +53,23 @@ export function parse<T extends TopLevelOptions>(
     ...subcommand.arguments
   }
 
+  const { allowKebabCaseAsCamelCaseArguments = false } = topLevelOpts
   const { args: convertedArgs, options: convertedOptions } =
-    convertArgsForParseArgs(args, mergedArguments)
+    convertArgsForParseArgs(
+      args,
+      mergedArguments,
+      allowKebabCaseAsCamelCaseArguments
+    )
   const result = parseArgsFunc({
     args: convertedArgs,
     options: convertedOptions,
     allowPositionals: subcommand.positionals !== undefined
   })
-  tweakResultFromParseArgs(result, mergedArguments)
+  tweakResultFromParseArgs(
+    result,
+    mergedArguments,
+    allowKebabCaseAsCamelCaseArguments
+  )
 
   return {
     type: 'normal',
@@ -94,14 +103,16 @@ function selectSubcommand(
 }
 
 /**
- * convert args to add support for string|boolean args
+ * convert args to add support for additional features
  *
- * - convert string|boolean args to string args
+ * - convert string|boolean and custom args to string args
  * - add an empty string after string|boolean args if the next arg is not an option
+ * - handle kebab-case camelCase conversion
  */
 function convertArgsForParseArgs(
   args: string[],
-  argsOptions: ArgumentOptionsRecord
+  argsOptions: ArgumentOptionsRecord,
+  allowKebabCaseAsCamelCaseArguments: boolean
 ): { args: string[]; options: ParseArgsConfig['options'] } {
   const stringBooleanArgNames = new Set(
     Object.entries(argsOptions)
@@ -133,59 +144,101 @@ function convertArgsForParseArgs(
   }
 
   const convertedOptions = Object.fromEntries(
-    Object.entries(argsOptions).map(([name, option]) => [
-      name,
-      {
+    Object.entries(argsOptions).flatMap(([name, option]) => {
+      const convertedName = allowKebabCaseAsCamelCaseArguments
+        ? camelCaseToKebabCase(name)
+        : undefined
+
+      const newOption = {
         ...option,
         type:
           typeof option.type !== 'string' || option.type === 'string|boolean'
             ? 'string'
             : option.type
       }
-    ])
+      const results = [[name, newOption]]
+      if (convertedName) {
+        results.push([convertedName, newOption])
+      }
+      return results
+    })
   )
   return { args: convertedArgs, options: convertedOptions }
 }
 
 /**
- * set true for string|boolean args if the value is empty
+ * - set true for string|boolean args if the value is empty
+ * - convert string values to custom values
+ * - handle kebab-case camelCase conversion
  */
 function tweakResultFromParseArgs(
   result_: ReturnType<typeof util.parseArgs>,
-  argsOptions: ArgumentOptionsRecord
+  argsOptions: ArgumentOptionsRecord,
+  allowKebabCaseAsCamelCaseArguments: boolean
 ) {
+  const kebabArgsToCamelArgs = allowKebabCaseAsCamelCaseArguments
+    ? Object.fromEntries(
+        Object.keys(argsOptions).map(name => [camelCaseToKebabCase(name), name])
+      )
+    : {}
+
   const result = result_ as NormalParsedResults<TopLevelOptions>
   for (const key in result.values) {
-    const option = argsOptions[key]!
+    const camelKey = kebabArgsToCamelArgs[key] || key
+    const option = argsOptions[camelKey]!
+
+    if (kebabArgsToCamelArgs[key]) {
+      const value = result.values[key]
+      delete result.values[key]
+      if (option.multiple) {
+        result.values[camelKey] ??= []
+        ;(result.values[camelKey] as Array<string | boolean>).push(
+          ...(value as Array<string | boolean>)
+        )
+      } else {
+        result.values[camelKey] ??= value
+      }
+    }
+
     if (
       option.type === 'string|boolean' ||
       (typeof option.type === 'object' && option.type.type === 'string|boolean')
     ) {
       if (option.multiple) {
-        if (result.values[key]) {
-          result.values[key] = (result.values[key] as string[]).map(v =>
-            v === '' ? true : v
+        if (result.values[camelKey]) {
+          result.values[camelKey] = (result.values[camelKey] as string[]).map(
+            v => (v === '' ? true : v)
           )
         }
       } else {
-        if (result.values[key] === '') {
-          result.values[key] = true
+        if (result.values[camelKey] === '') {
+          result.values[camelKey] = true
         }
       }
     }
     if (typeof option.type === 'object') {
       type CustomTypePermissive = CustomType & { type: 'string|boolean' }
       if (option.multiple) {
-        if (result.values[key]) {
-          result.values[key] = (
-            result.values[key] as Array<string | boolean>
+        if (result.values[camelKey]) {
+          result.values[camelKey] = (
+            result.values[camelKey] as Array<string | boolean>
           ).map(v => (option.type as CustomTypePermissive).parse(v))
         }
       } else {
-        result.values[key] = (option.type as CustomTypePermissive).parse(
-          result.values[key] as string | boolean
+        result.values[camelKey] = (option.type as CustomTypePermissive).parse(
+          result.values[camelKey] as string | boolean
         )
       }
     }
   }
+}
+
+function camelCaseToKebabCase(str: string) {
+  if (str.length === 0) {
+    return str
+  }
+  return str.replace(
+    /[A-Z]+(?![a-z])|[A-Z]/g,
+    (m, p1) => (p1 ? '-' : '') + m.toLowerCase()
+  )
 }

@@ -284,6 +284,74 @@ describe('custom type', () => {
   }
 })
 
+describe('allowKebabCaseAsCamelCaseArguments', () => {
+  const cases = [
+    {
+      name: 'simple',
+      input: ['dev', '--foo-bar', '1'],
+      allowConversion: true,
+      expected: '1'
+    },
+    {
+      name: 'multiple kebab case',
+      input: ['dev', '--foo-bar', '1', '--foo-bar', '2'],
+      allowConversion: true,
+      multiple: true,
+      expected: ['1', '2']
+    },
+    {
+      name: 'single kebab case and camel case (1)',
+      input: ['dev', '--foo-bar', '1', '--fooBar', '2'],
+      allowConversion: true,
+      expected: '2' // camel case always wins
+    },
+    {
+      name: 'single kebab case and camel case (2)',
+      input: ['dev', '--fooBar', '2', '--foo-bar', '1'],
+      allowConversion: true,
+      expected: '2' // camel case always wins
+    },
+    {
+      name: 'multiple kebab case and camel case (1)',
+      input: ['dev', '--foo-bar', '1', '--fooBar', '2'],
+      allowConversion: true,
+      multiple: true,
+      expected: ['2', '1'] // camel case values are always put first
+    },
+    {
+      name: 'multiple kebab case and camel case (2)',
+      input: ['dev', '--fooBar', '2', '--foo-bar', '1'],
+      allowConversion: true,
+      multiple: true,
+      expected: ['2', '1'] // camel case values are always put first
+    }
+  ]
+
+  for (const { name, input, allowConversion, multiple, expected } of cases) {
+    test(name, () => {
+      const actual = parse(input, {
+        subcommands: {
+          dev: {
+            arguments: {
+              fooBar: { type: 'string', multiple: multiple ?? false }
+            }
+          }
+        },
+        allowKebabCaseAsCamelCaseArguments: allowConversion
+      })
+      expect(actual).toStrictEqual({
+        type: 'normal',
+        subcommand: 'dev',
+        values:
+          expected === null
+            ? nullObject({})
+            : expect.objectContaining({ fooBar: expected }),
+        positionals: []
+      })
+    })
+  }
+})
+
 describe('global arguments', () => {
   test('merged with subcommand arguments', () => {
     const actual = parse(['dev', '--foo', '--bar'], {
