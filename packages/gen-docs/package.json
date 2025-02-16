@@ -9,8 +9,25 @@
     "build:dts": "NODE_OPTIONS='--import tsx' rollup -c rollup.config-d.ts",
     "test": "vitest"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sapphi-red/ordana.git"
+  },
+  "keywords": [
+    "argv",
+    "getopt",
+    "parser",
+    "parsing",
+    "argument",
+    "option",
+    "command",
+    "cli"
+  ],
   "author": "sapphi-red (https://github.com/sapphi-red)",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sapphi-red/ordana/issues"
+  },
   "description": "Document generation for ordana.",
   "peerDependencies": {
     "ordana": "workspace:^0.2.0"
