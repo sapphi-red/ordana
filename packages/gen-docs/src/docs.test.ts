@@ -1,6 +1,7 @@
 import { describe, expect, test } from 'vitest'
 import { generateDocs } from './index.ts'
-import type { DocsTopLevelOptions, TopLevelOptions } from 'ordana'
+import type { TopLevelOptions } from 'ordana'
+import type { DocsTopLevelOptions } from './types.ts'
 
 describe('generateDocs', () => {
   const opts = {
