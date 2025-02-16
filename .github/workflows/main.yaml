@@ -53,6 +53,7 @@ jobs:
           node-version: '22'
           cache: pnpm
       - run: pnpm i
+      - run: pnpm run -r --stream build
       - name: run type-check
         run: pnpm run type-check
   build:
