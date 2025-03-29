@@ -44,28 +44,40 @@ describe('generateHelpMessage', () => {
   } as const satisfies TopLevelOptions
 
   test('top-level command', async () => {
-    const actual = generateHelpMessage(opts, undefined)
+    const actual = generateHelpMessage({
+      topLevelOpts: opts,
+      targetSubcommand: undefined
+    })
     await expect(stripVTControlCharacters(actual)).toMatchFileSnapshot(
       './snapshot/foo-top-level.help.txt'
     )
   })
 
   test('top-level command with default subcommand', async () => {
-    const actual = generateHelpMessage(opts2, undefined)
+    const actual = generateHelpMessage({
+      topLevelOpts: opts2,
+      targetSubcommand: undefined
+    })
     await expect(stripVTControlCharacters(actual)).toMatchFileSnapshot(
       './snapshot/foo2-top-level.help.txt'
     )
   })
 
   test('subcommand', async () => {
-    const actual = generateHelpMessage(opts, 'bar')
+    const actual = generateHelpMessage({
+      topLevelOpts: opts,
+      targetSubcommand: 'bar'
+    })
     await expect(stripVTControlCharacters(actual)).toMatchFileSnapshot(
       './snapshot/foo-bar.help.txt'
     )
   })
 
   test('subcommand with alias', async () => {
-    const actual = generateHelpMessage(opts2, 'baz')
+    const actual = generateHelpMessage({
+      topLevelOpts: opts2,
+      targetSubcommand: 'baz'
+    })
     await expect(stripVTControlCharacters(actual)).toMatchFileSnapshot(
       './snapshot/foo2-baz.help.txt'
     )
