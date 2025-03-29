@@ -6,7 +6,7 @@ import {
   stringifyArgumentType,
   stringifyPositionals
 } from './utils.ts'
-import * as c from 'picocolors'
+import c from 'picocolors'
 
 /**
  * Generate help message
