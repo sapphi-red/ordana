@@ -25,7 +25,7 @@ export function parse<T extends TopLevelOptions>(
 ): ParsedResults<T> {
   const maybeSubcommand = input[0]
   if (maybeSubcommand === HELP_FLAG) {
-    return { type: 'help', targetSubcommand: undefined }
+    return { type: 'help', targetSubcommand: undefined, topLevelOpts }
   }
 
   const [subcommandName, subcommand, defaultSubcommandUsed] = selectSubcommand(
@@ -45,7 +45,7 @@ export function parse<T extends TopLevelOptions>(
 
   const args = !defaultSubcommandUsed ? input.slice(1) : input
   if (args[0] === HELP_FLAG) {
-    return { type: 'help', targetSubcommand: subcommandName }
+    return { type: 'help', targetSubcommand: subcommandName, topLevelOpts }
   }
 
   const mergedArguments = {

@@ -1,4 +1,7 @@
-import type { SubCommandOptions, TopLevelOptions } from './types.ts'
+import type {
+  SubCommandOptions,
+  TopLevelOptions
+} from './types.ts'
 import {
   getAliasList,
   getCommand,
@@ -11,12 +14,15 @@ import * as c from 'picocolors'
 /**
  * Generate help message
  *
- * @param targetSubcommand The subcommand to generate help message for. If `undefined`, generate help message for the top level command.
+ * @param result The result of the parsed command.
  */
-export function generateHelpMessage(
-  topLevelOpts: TopLevelOptions,
+export function generateHelpMessage({
+  topLevelOpts,
+  targetSubcommand
+}: {
+  topLevelOpts: TopLevelOptions
   targetSubcommand: string | undefined
-): string {
+}): string {
   const subcommand = targetSubcommand
     ? topLevelOpts.subcommands[targetSubcommand]
     : undefined
