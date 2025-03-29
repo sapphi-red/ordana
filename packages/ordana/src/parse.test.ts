@@ -398,18 +398,22 @@ describe('global arguments', () => {
 
 describe('--help works', () => {
   test('without subcommand', () => {
-    const actual = parse(['--help'], { subcommands: {} })
+    const options = { subcommands: {} }
+    const actual = parse(['--help'], options)
     expect(actual).toStrictEqual({
       type: 'help',
-      targetSubcommand: undefined
+      targetSubcommand: undefined,
+      topLevelOpts: options
     })
   })
 
   test('with subcommand', () => {
-    const actual = parse(['dev', '--help'], { subcommands: { dev: {} } })
+    const options = { subcommands: { dev: {} } }
+    const actual = parse(['dev', '--help'], options)
     expect(actual).toStrictEqual({
       type: 'help',
-      targetSubcommand: 'dev'
+      targetSubcommand: 'dev',
+      topLevelOpts: options
     })
   })
 
