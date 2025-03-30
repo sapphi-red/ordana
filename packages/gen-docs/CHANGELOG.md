@@ -1,5 +1,12 @@
 # ordana-gen-docs
 
+## 1.0.0
+
+### Patch Changes
+
+- Updated dependencies [[`a4c70d6`](https://github.com/sapphi-red/ordana/commit/a4c70d69869998dd1477b194beca612e13b640ed), [`7e6013c`](https://github.com/sapphi-red/ordana/commit/7e6013c8c41df9040cf3d676d901e7c7c5683cb1)]:
+  - ordana@0.4.0
+
 ## 0.3.0
 
 ### Patch Changes
