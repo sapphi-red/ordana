@@ -70,7 +70,7 @@ console.log(result)
 const input2 = ['dev', '--help']
 const result2 = parse(input2, options) // options is the same as above
 if (result2.type === 'help') {
-  const helpMessage = generateHelpMessage(options, result2.targetSubcommand)
+  const helpMessage = generateHelpMessage(result2)
   console.log(helpMessage)
   /*
     foo dev - my subcommand

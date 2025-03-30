@@ -11,12 +11,15 @@ import c from 'picocolors'
 /**
  * Generate help message
  *
- * @param targetSubcommand The subcommand to generate help message for. If `undefined`, generate help message for the top level command.
+ * @param result The result of the parsed command.
  */
-export function generateHelpMessage(
-  topLevelOpts: TopLevelOptions,
+export function generateHelpMessage({
+  topLevelOptions: topLevelOpts,
+  targetSubcommand
+}: {
+  topLevelOptions: TopLevelOptions
   targetSubcommand: string | undefined
-): string {
+}): string {
   const subcommand = targetSubcommand
     ? topLevelOpts.subcommands[targetSubcommand]
     : undefined

@@ -164,6 +164,7 @@ export type NormalParsedResults<T extends TopLevelOptions> =
 type SpecialParsedResults = {
   type: 'help'
   targetSubcommand: string | undefined
+  topLevelOptions: TopLevelOptions
 }
 
 export type ParsedResults<T extends TopLevelOptions> =
