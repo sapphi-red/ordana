@@ -403,7 +403,7 @@ describe('--help works', () => {
     expect(actual).toStrictEqual({
       type: 'help',
       targetSubcommand: undefined,
-      topLevelOpts: options
+      topLevelOptions: options
     })
   })
 
@@ -413,7 +413,7 @@ describe('--help works', () => {
     expect(actual).toStrictEqual({
       type: 'help',
       targetSubcommand: 'dev',
-      topLevelOpts: options
+      topLevelOptions: options
     })
   })
 

@@ -45,7 +45,7 @@ describe('generateHelpMessage', () => {
 
   test('top-level command', async () => {
     const actual = generateHelpMessage({
-      topLevelOpts: opts,
+      topLevelOptions: opts,
       targetSubcommand: undefined
     })
     await expect(stripVTControlCharacters(actual)).toMatchFileSnapshot(
@@ -55,7 +55,7 @@ describe('generateHelpMessage', () => {
 
   test('top-level command with default subcommand', async () => {
     const actual = generateHelpMessage({
-      topLevelOpts: opts2,
+      topLevelOptions: opts2,
       targetSubcommand: undefined
     })
     await expect(stripVTControlCharacters(actual)).toMatchFileSnapshot(
@@ -65,7 +65,7 @@ describe('generateHelpMessage', () => {
 
   test('subcommand', async () => {
     const actual = generateHelpMessage({
-      topLevelOpts: opts,
+      topLevelOptions: opts,
       targetSubcommand: 'bar'
     })
     await expect(stripVTControlCharacters(actual)).toMatchFileSnapshot(
@@ -75,7 +75,7 @@ describe('generateHelpMessage', () => {
 
   test('subcommand with alias', async () => {
     const actual = generateHelpMessage({
-      topLevelOpts: opts2,
+      topLevelOptions: opts2,
       targetSubcommand: 'baz'
     })
     await expect(stripVTControlCharacters(actual)).toMatchFileSnapshot(

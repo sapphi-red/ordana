@@ -1,7 +1,4 @@
-import type {
-  SubCommandOptions,
-  TopLevelOptions
-} from './types.ts'
+import type { SubCommandOptions, TopLevelOptions } from './types.ts'
 import {
   getAliasList,
   getCommand,
@@ -17,10 +14,10 @@ import * as c from 'picocolors'
  * @param result The result of the parsed command.
  */
 export function generateHelpMessage({
-  topLevelOpts,
+  topLevelOptions: topLevelOpts,
   targetSubcommand
 }: {
-  topLevelOpts: TopLevelOptions
+  topLevelOptions: TopLevelOptions
   targetSubcommand: string | undefined
 }): string {
   const subcommand = targetSubcommand
