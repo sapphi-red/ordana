@@ -1,6 +1,6 @@
 {
   "name": "ordana-gen-docs",
-  "version": "1.0.0",
+  "version": "0.4.0",
   "type": "module",
   "exports": "./dist/index.js",
   "scripts": {
